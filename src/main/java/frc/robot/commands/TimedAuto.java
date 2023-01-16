@@ -4,44 +4,45 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
-import edu.wpi.first.wpilibj.Joystick;
 
-public class Drive extends CommandBase {
-  Joystick rightStick;
-  Joystick leftStick;
+public class TimedAuto extends CommandBase {
+  Timer timer = new Timer();
 
-private final DriveTrain s_DriveTrain;
-  /** Creates a new Drive. */
-  public Drive(DriveTrain s_DriveTrain, Joystick leftStick, Joystick rightStick) {
-   this.s_DriveTrain=s_DriveTrain;
-   this.leftStick = leftStick;
-   this.rightStick =rightStick;
-    // Use addRequirements() here to declare subsystem dependencies.
+  DriveTrain s_DriveTrain = new DriveTrain();
+  /** Creates a new TimedAuto. */
+  public TimedAuto(DriveTrain s_DriveTrain) {
+    this.s_DriveTrain=s_DriveTrain;
     addRequirements(s_DriveTrain);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_DriveTrain.joystickDrive(leftStick, rightStick);
-    SmartDashboard.putNumber("Encoder Value", s_DriveTrain.leftVal());
+    s_DriveTrain.auto(0.2, 0);
+    timer.get();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    s_DriveTrain.auto(0,0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return timer.get()>2;
   }
 }
