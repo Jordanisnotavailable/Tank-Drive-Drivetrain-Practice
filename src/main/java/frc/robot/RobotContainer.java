@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Auto;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
@@ -26,6 +27,7 @@ public class RobotContainer {
   private final Joystick leftStick = new Joystick(0);
    private final Joystick rightStick = new Joystick(1);
   private final Drive c_drive = new Drive(s_DriveTrain, leftStick, rightStick);
+  private final Auto s_autonomous = new Auto(s_DriveTrain);
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -65,7 +67,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    return s_autonomous;
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
   }
 }

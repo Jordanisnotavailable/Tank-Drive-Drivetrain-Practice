@@ -35,6 +35,12 @@ public class DriveTrain extends SubsystemBase {
   
   }
 
+  public void atonoumous(double leftSpeed, double rightSpeed){
+
+    leftOne.set(leftSpeed);
+    rightOne.set(rightSpeed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
